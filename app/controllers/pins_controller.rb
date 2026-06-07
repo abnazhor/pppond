@@ -13,7 +13,7 @@ class PinsController < ApplicationController
     @pin.pinable.url_cache = UrlCache.find_or_create_by(url: @pin.pinable.url)
 
     if @pin.save
-      UrlCaches::Refresher.new(@pin.pinable.url_cache).call if !@pin.pinable.url_cache.fresh?
+      UrlCaches::RefreshJob.perform_later(@pin.pinable.url_cache)
 
       redirect_to @pin, notice: "Pin was successfully created."
     else
