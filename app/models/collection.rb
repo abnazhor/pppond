@@ -12,6 +12,10 @@ class Collection < ApplicationRecord
     find_by!(inbox: true)
   end
 
+  def self.find_inbox
+    find_by(inbox: true)
+  end
+
   private
 
   def only_one_inbox_per_user

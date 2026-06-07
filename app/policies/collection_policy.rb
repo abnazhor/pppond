@@ -22,4 +22,19 @@ class CollectionPolicy < ApplicationPolicy
   def destroy?
     user.present? && record.user_id == user.id
   end
+
+  class Scope
+    def initialize(user, scope)
+      @user  = user
+      @scope = scope
+    end
+
+    def resolve
+      if @user.present?
+        @scope.where("private = ? OR user_id = ?", false, @user.id)
+      else
+        @scope.where(private: false)
+      end
+    end
+  end
 end

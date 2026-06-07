@@ -8,9 +8,10 @@ class CollectionsController < ApplicationController
 
     add_breadcrumb(find_user.to_s, user_path(find_user))
 
-    @collections = find_user.collections.regular.all
+    @collections = policy_scope(Collection).regular.all
+    @inbox = policy_scope(Collection).find_inbox
 
-    render Views::Collections::Index.new(collections: @collections, inbox: find_user.collections.find_inbox!, user: find_user)
+    render Views::Collections::Index.new(collections: @collections, inbox: @inbox, user: find_user)
   end
 
   def show

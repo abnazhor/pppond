@@ -24,7 +24,7 @@ class Views::Collections::Index < Views::Base
 
       Separator(class: "my-9")
 
-      render Components::Collections::Collection.new(collection: @inbox)
+      render Components::Collections::Collection.new(collection: @inbox) if @inbox
 
       @collections.each do |collection|
         render Components::Collections::Collection.new(collection: collection)
