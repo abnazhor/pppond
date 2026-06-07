@@ -27,9 +27,9 @@ module Components
                 @presented_collection.description
               end
 
-              Text(size: "1", class: "text-muted-foreground mt-2 italic") {
+              Text(size: "1", class: "text-muted-foreground mt-2 italic") do
                 meta_info
-              }
+              end
             end
 
             div(class: "col-span-9 flex gap-6") do
@@ -54,7 +54,7 @@ module Components
       end
 
       def meta_info
-        return nil if @collection.respond_to?(:inbox)
+        return nil if @collection.inbox?
 
         info = []
 
