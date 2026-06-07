@@ -11,4 +11,24 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  root "application#root"
+
+  resources :users, path: '/', constraints: { id: /@[^\/]+/ } do
+    resources :collections, path: '/', constraints: { id: /\d+/ }
+  end
+
+  resources :pins do
+    get :url_images, on: :collection
+    patch :update_collection, on: :member
+  end
+
+  resources :posts, only: [:new, :create]
+
+  resources :collections, only: [:create, :update, :destroy]
+
+  get :join, to: "sessions#new"
+  post :join, to: "sessions#create"
+  post 'join/verify_auth_code', to: "sessions#verify_auth_code", as: :verify_auth_code
+  delete :sign_out, to: "sessions#destroy"
 end

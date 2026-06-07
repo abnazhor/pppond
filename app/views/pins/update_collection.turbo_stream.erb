@@ -1,0 +1,24 @@
+<turbo-stream action="toast" target="ruby-ui-toaster" variant="success" title="Saved" description="Pin moved to <%= @pin.collection ? @pin.collection.name : 'Inbox' %> collection">
+  <template></template>
+</turbo-stream>
+
+<% if @referrer_action[:controller] == "collections" && @referrer_action[:action] == "index" %>
+  <turbo-stream action="update" target="<%= dom_id(@old_collection) %>">
+    <template>
+      <%= render Components::Collections::Collection.new(collection: @old_collection) %>
+    </template>
+  </turbo-stream>
+
+  <turbo-stream action="update" target="<%= dom_id(@pin.collection) %>">
+    <template>
+      <%= render Components::Collections::Collection.new(collection: @pin.collection) %>
+    </template>
+  </turbo-stream>
+<% end %>
+
+<% if @referrer_action[:controller] == "collections" && @referrer_action[:action] == "show" %>
+  <turbo-stream action="remove" target="<%= dom_id(@pin, :cell) %>">
+    <template>
+    </template>
+  </turbo-stream>
+<% end %>

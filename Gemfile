@@ -57,4 +57,21 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "bullet"
 end
+
+gem "ruby_ui", "~> 1.2", group: :development, require: false
+
+gem "phlex-rails", "~> 2.4"
+
+gem "tailwind_merge", "~> 1.5"
+
+gem "tailwindcss-rails", "~> 4.4"
+
+gem "link_thumbnailer", "~> 3.4"
+
+gem "fastimage", "~> 2.4"
+
+gem "mini_magick", "~> 5.3"
+
+gem "pundit", "~> 2.5"

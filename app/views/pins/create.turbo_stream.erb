@@ -1,0 +1,17 @@
+<turbo-stream action="append" target="ruby-ui-toaster">
+  <template>
+    <%= render Components::Pins::CreatedToast.new %>
+  </template>
+</turbo-stream>
+
+<turbo-stream action="replace" target="collection-inbox">
+  <template>
+    <%= render Components::Collections::Inbox.new %>
+  </template>
+</turbo-stream>
+
+<turbo-stream action="prepend" target="inbox-pins">
+  <template>
+    <div class="col-span-3"><%= render Components::Pins::Pin.new(pin: @pin) %></div>
+  </template>
+</turbo-stream>
