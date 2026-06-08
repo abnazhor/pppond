@@ -4,11 +4,11 @@ class PinsController < ApplicationController
   before_action :preload_user_collections_for_select
 
   def create
-    @pin = Pin.new(pin_params.except(:pinable_attributes))
+    @pin = Pin.new(pin_params.except(:pinable_attributes, :collection_id))
     authorize @pin
 
     @pin.user = current_user
-    @pin.collection = current_user.collections.find_inbox!
+    @pin.collection = current_user.collections.find_by(id: pin_params[:collection_id]) || current_user.collections.find_inbox!
     @pin.pinable = Post.new(pin_params[:pinable_attributes] || {})
     @pin.pinable.url_cache = UrlCache.find_or_create_by(url: @pin.pinable.url)
 
