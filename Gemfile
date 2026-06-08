@@ -77,3 +77,5 @@ gem "fastimage", "~> 2.4"
 gem "mini_magick", "~> 5.3"
 
 gem "pundit", "~> 2.5"
+
+gem "solid_errors", "~> 0.7.0"
