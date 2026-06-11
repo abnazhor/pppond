@@ -22,26 +22,13 @@ module Components
       private
 
       def save
-        Dialog(id: dom_id(@pin.pinable, :pin_dialog)) do
-          DialogTrigger do
-            Button { "Connect" }
-          end
-          DialogContent do
-            DialogHeader do
-              DialogTitle { "Connect this post" }
-              DialogDescription { "Choose a collection to connect this post to." }
-            end
-            DialogMiddle do
-              turbo_frame_tag "pin_post", src: pin_post_path(@pin.pinable), loading: :lazy do
-                "Loading..."
-              end
-            end
-            DialogFooter do
-              Button(variant: :outline, data: { action: "click->dialog#close" }) { "Cancel" }
-              Button(form: "new_pin_form", type: :submit) { "Save" }
-            end
-          end
-        end
+        data = {
+          controller: "connect-btn",
+          action: "click->connect-btn#openDialog",
+          connect_btn_url_value: pin_post_path(@pin.pinable)
+        }
+
+        Button(data: data) { "Connect" }
       end
     end
   end

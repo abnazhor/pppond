@@ -7,6 +7,7 @@ class PostsController < ApplicationController
     render Views::Posts::New.new
   end
 
+  # @todo move that to pins controller probably
   def pin
     @pin = Pin.new
     @post = Post.find(params[:id])

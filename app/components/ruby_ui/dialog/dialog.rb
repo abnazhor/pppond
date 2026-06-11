@@ -17,6 +17,7 @@ module RubyUI
       {
         data: {
           controller: "dialog",
+          action: "click->dialog#backdropClose dialog:open->dialog#open dialog:close->dialog#close",
           dialog_open_value: @open
         }
       }
