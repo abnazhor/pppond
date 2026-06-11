@@ -14,6 +14,8 @@ class PinsController < ApplicationController
     @pin.user = current_user
 
     if @pin.save
+      @pin.collection.touch(:changed_at)
+
       respond_to do |format|
         format.turbo_stream
       end
