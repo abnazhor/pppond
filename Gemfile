@@ -89,3 +89,5 @@ gem "validate_url", "~> 1.0"
 gem "ferrum", "~> 0.17.2"
 
 gem "figaro", "~> 1.3"
+
+gem "mission_control-jobs", "~> 1.1"
