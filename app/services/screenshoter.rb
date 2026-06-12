@@ -11,6 +11,8 @@ class Screenshoter
   def call
     if @post.url.match?(%r{https?://(www\.)?instagram\.com/[a-zA-Z._]+})
       raise NotImplementedError, "Instagram profile previews are not supported yet"
+    elsif @post.url.match?(%r{https?://(www\.)?youtube\.com/watch\?v=[a-zA-Z0-9_-]+})
+      raise NotImplementedError, "YouTube video previews are not supported yet"
     else
       Screenshoter::DefaultHandler.new(@post).call
     end
