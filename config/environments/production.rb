@@ -92,6 +92,5 @@ Rails.application.configure do
   config.solid_errors.send_emails = false
   config.solid_errors.email_from = ""
   config.solid_errors.email_to = ""
-  config.solid_errors.username = Figaro.env.admin_user
-  config.solid_errors.password = Figaro.env.admin_password
+  config.solid_errors.base_controller_class = "AdminController"
 end

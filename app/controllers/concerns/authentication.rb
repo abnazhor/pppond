@@ -22,6 +22,12 @@ module Authentication
     require_authentication
   end
 
+  def ensure_admin!
+    unless authenticated? && current_user.admin?
+      redirect_to main_app.root_path, alert: "You are not authorized to access this page."
+    end
+  end
+
   def current_user
     Current.session&.user
   end

@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
-  mount MissionControl::Jobs::Engine, at: "/jobs"
-
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  if Rails.env.production?
-    mount SolidErrors::Engine, at: "/solid_errors"
-  end
+  mount SolidErrors::Engine, at: "/errors" if Rails.env.production?
+  mount MissionControl::Jobs::Engine, at: "/jobs"
 
   root "application#root"
 

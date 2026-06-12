@@ -1,6 +1,8 @@
 class FeedsController < ApplicationController
   before_action :authenticate_user!
 
+  skip_after_action :verify_authorized
+
   def show
     add_breadcrumb("Feed", feed_path)
 
