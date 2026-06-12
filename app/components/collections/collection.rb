@@ -1,8 +1,6 @@
 module Components
   module Collections
     class Collection < Components::Base
-      include Phlex::Rails::Helpers::Pluralize
-      include Phlex::Rails::Helpers::TimeAgoInWords
       include Phlex::Rails::Helpers::DOMID
 
       def initialize(collection:, opts: {})
@@ -57,17 +55,7 @@ module Components
       def meta_info
         return nil if @collection.inbox?
 
-        info = []
-
-        info << "private" if @collection.private
-        info << "started #{time_ago_in_words(@collection.created_at)} ago"
-        info << "updated #{time_ago_in_words(@collection.changed_at)} ago" if @collection.changed_at
-        info << "containing #{pluralize(@collection.pins_count, "pin")}"
-
-        info = info.to_sentence
-
-        info << ". Run by #{@collection.user}." if @opts[:show_author]
-        info
+        Components::Collections::MetaInfo(collection: @collection, opts: @opts)
       end
     end
   end

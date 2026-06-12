@@ -11,6 +11,10 @@ class CollectionPolicy < ApplicationPolicy
     !record.private? || (user.present? && record.user_id == user.id)
   end
 
+  def connect?
+    user.present?
+  end
+
   def create?
     user.present?
   end

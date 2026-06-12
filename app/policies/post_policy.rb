@@ -1,4 +1,8 @@
 class PostPolicy < ApplicationPolicy
+  def connect?
+    user.present?
+  end
+
   class Scope
     def initialize(user, scope)
       @user  = user

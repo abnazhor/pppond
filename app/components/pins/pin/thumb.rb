@@ -9,26 +9,18 @@ module Components
         ActiveStorage::Current.url_options ||= Rails.application.routes.default_url_options
       end
 
-      def view_template(&)
-        div(class: "w-full aspect-square bg-muted flex items-center #{dom_id(@pin, :thumb)}") do
-          image
-        end
-      end
-
       private
 
-      def image
-        if @pin.pinable.screenshot&.attached?
-          img(src: rails_blob_path(@pin.pinable.screenshot.variant(:square_350)), width: 350, loading: :lazy)
-        elsif @pin.pinable.url_cache&.thumb&.attached?
-          img(src: rails_blob_path(@pin.pinable.url_cache.thumb.variant(:square_350)), width: 350, loading: :lazy)
-        end
+      def container(&)
+        div(class: container_classes, &)
       end
 
-      # I had to overwrite the default rails helper to be able trender that partial outside of a view context.
-      # Is there a better way to do this?
-      def rails_blob_path(variant)
-        Rails.application.routes.url_helpers.rails_representation_path(variant, only_path: true)
+      def core_container_classes
+        "w-full aspect-square bg-muted flex items-center"
+      end
+
+      def container_classes
+        core_container_classes + " #{dom_id(@pin, :thumb)}"
       end
     end
   end

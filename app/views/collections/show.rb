@@ -24,6 +24,16 @@ class Views::Collections::Show < Views::Base
         end
 
         header.with_actions do
+          if policy(@collection).connect?
+            data = {
+              controller: "connect-btn",
+              action: "click->connect-btn#openDialog",
+              connect_btn_url_value: new_collection_pins_path(@collection)
+            }
+
+            Button(data: data, variant: :secondary, size: :sm) { "Connect" }
+          end
+
           if policy(@collection).update?
             Components::Collections::EditBtn(collection: @collection)
           end

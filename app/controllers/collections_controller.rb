@@ -58,6 +58,14 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def pin
+    @pin = Pin.new
+    @collection = policy_scope(Collection).find(params[:id])
+    authorize @collection, :connect?
+
+    render Views::Pins::New.new(pin: @pin, pinable: @collection)
+  end
+
   def destroy
     @collection = current_user.collections.find_by!(id: params[:id])
     authorize @collection

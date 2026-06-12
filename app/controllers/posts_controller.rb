@@ -7,15 +7,6 @@ class PostsController < ApplicationController
     render Views::Posts::New.new
   end
 
-  # @todo move that to pins controller probably
-  def pin
-    @pin = Pin.new
-    @post = Post.find(params[:id])
-    authorize @pin, :new?
-
-    render Views::Pins::New.new(pin: @pin, post: @post)
-  end
-
   def create
     @referrer_action = Rails.application.routes.recognize_path(request.referer)
 

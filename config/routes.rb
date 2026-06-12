@@ -28,11 +28,12 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: [ :new, :create ] do
-    get :pin, on: :member
-    post :pin, to: "pins#create", on: :member
+    resource :pins, only: [ :new, :create, :show ]
   end
 
-  resources :collections, only: [ :create, :update, :destroy ]
+  resources :collections, only: [ :create, :update, :destroy ] do
+    resource :pins, only: [ :new, :create, :show ]
+  end
 
   get :join, to: "sessions#new"
   post :join, to: "sessions#create"

@@ -3,14 +3,22 @@ class PinsController < ApplicationController
   before_action :set_pin, only: %i[ update_collection destroy ]
   before_action :preload_user_collections_for_select
 
+  def new
+    @pin = Pin.new
+    @pinable = find_pinable
+    authorize @pinable, :connect?
+
+    render Views::Pins::New.new(pin: @pin, pinable: @pinable)
+  end
+
   def create
-    @post = policy_scope(Post).find(params[:id])
+    @pinable = find_pinable
     @referrer_action = Rails.application.routes.recognize_path(request.referer)
-    collection = policy_scope(current_user.collections).find(pin_params[:collection_id])
-    @pin = Pin.new(collection: collection)
+    target_collection = policy_scope(current_user.collections).find(pin_params[:collection_id])
+    @pin = Pin.new(collection: target_collection)
     authorize @pin
 
-    @pin.pinable = @post
+    @pin.pinable = @pinable
     @pin.user = current_user
 
     if @pin.save
@@ -44,5 +52,15 @@ class PinsController < ApplicationController
 
   def pin_params
     params.require(:pin).permit(:collection_id, pinable_attributes: [ :url ])
+  end
+
+  def find_pinable
+    if params[:post_id]
+      @pinable = policy_scope(Post).find(params[:post_id])
+    elsif params[:collection_id]
+      @pinable = policy_scope(Collection).find(params[:collection_id])
+    else
+      raise ActiveRecord::RecordNotFound, "Pinable not found"
+    end
   end
 end

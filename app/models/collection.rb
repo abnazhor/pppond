@@ -18,6 +18,10 @@ class Collection < ApplicationRecord
     find_by(inbox: true)
   end
 
+  def to_s
+    name
+  end
+
   private
 
   def only_one_inbox_per_user

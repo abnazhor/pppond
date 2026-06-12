@@ -1,6 +1,6 @@
 module Components
-  module Pins
-    class Pin::Meta < Components::Base
+  module Posts
+    class PinContent::Meta < Components::Base
       include Phlex::Rails::Helpers::TimeAgoInWords
       include ActionView::RecordIdentifier
 
@@ -16,6 +16,12 @@ module Components
       end
 
       private
+
+      def title
+        span(class: "text-xs text-muted-foreground text-nowrap overflow-hidden text-ellipsis max-w-full block text-center group-hover:hidden") {
+          @pin.pinable.url_cache&.title || @pin.pinable.url || "Untitled"
+        }
+      end
 
       def time_and_by
         span(class: "text-xs text-muted-foreground text-nowrap overflow-hidden text-ellipsis max-w-full block text-center group-hover:block hidden") {
