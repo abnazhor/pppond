@@ -16,16 +16,16 @@ module Views
       def current_user_primary_meta
         items = []
 
-        items << "You have #{pluralize(collections.count, "collection")} with #{pluralize(collections.sum(&:pins_count), "pin")}."
+        items << "You have #{pluralize(collections.count, "collection")} with #{pluralize(collections.sum(&:pins_count), "pin")} and #{pluralize(@user.followers.count, "follower")}"
         items << "Your profile is private." if @user.private?
 
-        items.join(" ")
+        items.join(". ")
       end
 
       def displayed_user_primary_meta
         items = []
 
-        items << "#{@user} has #{pluralize(collections.count, "collection")} with #{pluralize(collections.sum(&:pins_count), "pin")}."
+        items << "#{@user} has #{pluralize(collections.count, "collection")} with #{pluralize(collections.sum(&:pins_count), "pin")} and #{pluralize(@user.followers.count, "follower")}."
         items << "This profile is private." if @user.private?
 
         items.join(" ")
