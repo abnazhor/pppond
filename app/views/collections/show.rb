@@ -22,9 +22,12 @@ class Views::Collections::Show < Views::Base
         end
 
         header.with_secondary do
-          # RubyUI::Text(as: "p", size: "xs", weight: "muted", class: "italic") {
-          #   "Pinned in <a href='#'>Lorem ipsum dolor sit amet</a>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.".html_safe
-          # }
+          if @collection.pins_as_pinable.any?
+            RubyUI::Text(as: "p", size: "xs", weight: "muted", class: "italic") {
+              plain "Pinned in "
+              pinned_in_links
+            }
+          end
         end
 
         header.with_actions do
@@ -73,5 +76,11 @@ class Views::Collections::Show < Views::Base
     info << "containing #{pluralize(@collection.pins_count, "pin")}"
 
     info.to_sentence
+  end
+
+  def pinned_in_links
+    @collection.pins_as_pinable.includes(:collection).map do |post|
+      link_to(post.collection.name, user_collection_path(post.collection.user, post.collection))
+    end.to_sentence.html_safe
   end
 end

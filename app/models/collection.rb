@@ -1,5 +1,6 @@
 class Collection < ApplicationRecord
   has_many :pins, dependent: :destroy
+  has_many :pins_as_pinable, class_name: "Pin", as: :pinable, dependent: :destroy
   belongs_to :user
 
   before_validation :ensure_changed_at
