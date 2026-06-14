@@ -1,6 +1,6 @@
 class UrlThumbnailer::ProcessScreenshotHandlerJob < ApplicationJob
   queue_as :screenshoter
-  limits_concurrency to: 1, key: :screenshoter
+  limits_concurrency to: 1, key: ->(*) { "screenshoter" }
 
   retry_on Ferrum::DeadBrowserError, wait: :exponentially_longer, attempts: 5
 
