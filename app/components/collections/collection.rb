@@ -14,7 +14,7 @@ module Components
       def view_template(&)
         cache(@collection) do
           div(class: "mb-6", id: @id || dom_id(@collection)) do
-            div(class: "grid grid-cols-12 gap-6 w-full") do
+            div(class: "grid grid-cols-12 gap-9 w-full") do
               div(class: "col-span-3") do
                 a(href: href, class: "hover:underline") do
                   render RubyUI::Heading(level: 4, class: "inline") { @presented_collection.name }
