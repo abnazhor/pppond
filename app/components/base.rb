@@ -31,4 +31,8 @@ class Components::Base < Phlex::HTML
       }
     ) { content }
   end
+
+  def cache_store
+    Rails.cache
+  end
 end
