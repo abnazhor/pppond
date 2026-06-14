@@ -34,13 +34,20 @@ class UrlThumbnailer::DefaultHandler
     image_url = object.images.first.src
     logger.info "Downloading thumbnail from URL: #{image_url}..."
 
-    downloaded_image = download_thumb(image_url)
+    begin
+      downloaded_image = download_thumb(image_url)
+      io = StringIO.new(downloaded_image.body)
+      io.rewind
 
-    logger.info "Attaching thumbnail to URL cache for URL: #{@post.url}..."
-    @url_cache.thumb.attach(
-      io: downloaded_image,
-      filename: File.basename(URI.parse(image_url).path)
-    )
+      logger.info "Attaching thumbnail to URL cache for URL: #{@post.url}..."
+      @url_cache.thumb.attach(
+        io: io,
+        filename: File.basename(URI.parse(image_url).path)
+      )
+    rescue Faraday::ResourceNotFound => e
+      # Do not report that anywhere, there will be a lot of cases like this and we can't do much about that.
+      logger.warn "Thumbnail not found at URL: #{image_url} for post URL: #{@post.url}. Error: #{e.message}"
+    end
 
     @url_cache.touch(:refreshed_at)
   end
