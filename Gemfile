@@ -83,6 +83,7 @@ gem "mini_magick", "~> 5.3"
 gem "pundit", "~> 2.5"
 
 gem "faraday", "~> 2.14"
+gem "faraday-retry"
 
 gem "validate_url", "~> 1.0"
 

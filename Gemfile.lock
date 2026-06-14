@@ -123,6 +123,8 @@ GEM
       logger
     faraday-net_http (3.4.4)
       net-http (~> 0.5)
+    faraday-retry (2.4.0)
+      faraday (~> 2.0)
     fastimage (2.4.1)
     ferrum (0.17.2)
       addressable (~> 2.5)
@@ -493,6 +495,7 @@ DEPENDENCIES
   bundler-audit
   debug
   faraday (~> 2.14)
+  faraday-retry
   fastimage (~> 2.4)
   ferrum (~> 0.17.2)
   figaro (~> 1.3)
