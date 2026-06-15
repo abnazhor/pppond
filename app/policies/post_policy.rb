@@ -1,4 +1,8 @@
 class PostPolicy < ApplicationPolicy
+  def new?
+    user.present?
+  end
+
   def connect?
     user.present?
   end

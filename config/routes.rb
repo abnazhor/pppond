@@ -25,7 +25,19 @@ Rails.application.routes.draw do
     get :secondary_actions, on: :member
   end
 
-  resources :posts, only: [ :new, :create ] do
+  resources :posts, only: [] do
+    get :new_text, on: :collection
+    get :new_url, on: :collection
+
+    get :edit_text, on: :member
+    get :edit_url, on: :member
+
+    post :create_text, on: :collection
+    patch :update_text, on: :member
+
+    post :create_url, on: :collection
+    patch :update_url, on: :member
+
     resource :pins, only: [ :new, :create, :show ]
   end
 

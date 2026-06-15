@@ -11,8 +11,8 @@ module Components
 
           div(class: "flex gap-3 items-center") do
             if authenticated?
-              DropdownMenu(options: { placement: 'bottom-end' }) do
-                DropdownMenuTrigger(class: 'w-full') do
+              DropdownMenu(options: { placement: "bottom-end" }) do
+                DropdownMenuTrigger(class: "w-full") do
                   Button(variant: :link) { current_user.to_param }
                 end
 
@@ -27,7 +27,7 @@ module Components
               Link(href: join_path, variant: :link) { "Join" }
             end
 
-            render Components::Pins::AddBtn.new
+            render Components::AddPostBtn.new
           end
         end
       end

@@ -8,6 +8,7 @@ class Components::Base < Phlex::HTML
   register_value_helper :current_user
   register_value_helper :authenticated?
   register_value_helper :policy
+  register_value_helper :marksmithed
 
   if Rails.env.development?
     def before_template

@@ -11,6 +11,10 @@ class PinPolicy < ApplicationPolicy
     user.present?
   end
 
+  def create_text?
+    user.present?
+  end
+
   def update?
     user.present? && record.collection.user_id == user.id
   end

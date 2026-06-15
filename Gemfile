@@ -98,3 +98,8 @@ gem "store_model", "~> 4.6"
 gem "active_storage_validations", "~> 3.0"
 
 gem "pagy", "~> 43.5"
+
+gem "marksmith", "~> 0.5.2"
+gem "commonmarker", "~> 2.8"
+
+gem "data_migrate", "~> 11.3"
