@@ -34,7 +34,7 @@ class Views::Posts::NewImage < Views::Base
   def input_attributes
     {
       multiple: true,
-      direct_upload: true,
+      # direct_upload: true,
       data: {
         remote_dialog_target: "prepopulateInput",
         new_image_dialog_target: "fileInput",
