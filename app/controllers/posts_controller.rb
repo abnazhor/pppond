@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [ :create_url, :create_text ]
-  # before_action :set_pin, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: [ :create_url, :create_text, :create_image ]
 
   # GET /pins/new
   def new_text
@@ -15,6 +14,13 @@ class PostsController < ApplicationController
     authorize post, :new?
 
     render Views::Posts::NewUrl.new(post: post)
+  end
+
+  def new_image
+    post = Post::Image.new(create_image_params)
+    authorize post, :new?
+
+    render Views::Posts::NewImage.new(post: post)
   end
 
   def edit_text
@@ -101,6 +107,34 @@ class PostsController < ApplicationController
     end
   end
 
+  def create_image
+    @referrer_action = Rails.application.routes.recognize_path(request.referer)
+
+    @post = Post::Image.new(create_image_params.except(:collection_id))
+    @post.user = current_user
+    @post.save
+
+    @pin = Pin.new
+    @pin.pinable = @post
+    @pin.user = current_user
+    @collection = current_user.collections.find_by(id: create_image_params[:collection_id]) || current_user.collections.find_inbox!
+    @pin.collection = @collection
+
+    authorize @pin, :create?
+
+    if @pin.save!
+      @collection.touch(:changed_at)
+
+      respond_to do |format|
+        format.turbo_stream { render :create }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { render :create, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def create_text_params
@@ -109,5 +143,9 @@ class PostsController < ApplicationController
 
   def create_url_params
     params.require(:post_url).permit(:url, :collection_id)
+  end
+
+  def create_image_params
+    params.require(:post_image).permit(:collection_id, files: [])
   end
 end

@@ -10,6 +10,8 @@ module Components
           render Components::Posts::Url::PinContent.new(pin: @pin)
         elsif @pin.pinable.is_a?(Post::Text)
           render Components::Posts::Text::PinContent.new(pin: @pin)
+        elsif @pin.pinable.is_a?(Post::Image)
+          render Components::Posts::Image::PinContent.new(pin: @pin)
         else
           raise "Unknown post type"
         end

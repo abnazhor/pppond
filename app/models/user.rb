@@ -26,6 +26,10 @@ class User < ApplicationRecord
     Follow.where(actor: self, target: target).exists?
   end
 
+  def premium?
+    premium_until.present? && premium_until > Time.current
+  end
+
   private
 
   def create_inbox_collection

@@ -1,7 +1,7 @@
 import {Controller} from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["urlBtn", "textBtn"]
+  static targets = ["urlBtn", "textBtn", "imageBtn"]
 
   connect() {
     this.onPaste = this.onPaste.bind(this)
@@ -15,16 +15,40 @@ export default class extends Controller {
   onPaste(event) {
     if (this.isEditableElement(document.activeElement)) return
 
+    const imageItem = [...(event.clipboardData?.items || [])].find(item =>
+      item.type.startsWith("image/")
+    )
+
+    if (imageItem) {
+      const file = imageItem.getAsFile()
+
+      if (!file) return
+
+      event.preventDefault()
+
+      this.dispatch("prepopulate", {
+        prefix: "remote-dialog-btn",
+        detail: {value: file}
+      })
+
+      this.imageBtnTarget.click()
+      return
+    }
+
     const text = event.clipboardData?.getData("text")?.trim()
 
     if (!text) return
+
     event.preventDefault()
 
+    this.dispatch("prepopulate", {
+      prefix: "remote-dialog-btn",
+      detail: {value: text}
+    })
+
     if (this.isUrl(text)) {
-      this.dispatch("prepopulate", {prefix: "remote-dialog-btn", detail: {value: text}})
       this.urlBtnTarget.click()
     } else {
-      this.dispatch("prepopulate", {prefix: "remote-dialog-btn", detail: {value: text}})
       this.textBtnTarget.click()
     }
   }

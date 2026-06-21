@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :posts, only: [] do
     get :new_text, on: :collection
     get :new_url, on: :collection
+    get :new_image, on: :collection
 
     get :edit_text, on: :member
     get :edit_url, on: :member
@@ -37,6 +38,8 @@ Rails.application.routes.draw do
 
     post :create_url, on: :collection
     patch :update_url, on: :member
+
+    post :create_image, on: :collection
 
     resource :pins, only: [ :new, :create, :show ]
   end
