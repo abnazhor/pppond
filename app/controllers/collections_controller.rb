@@ -46,7 +46,7 @@ class CollectionsController < ApplicationController
   end
 
   def update
-    @collection = current_user.collections.find_by!(id: params[:id])
+    @collection = policy_scope(current_user.collections).find_by_slug!(params[:slug])
     authorize @collection
 
     respond_to do |format|
@@ -69,7 +69,7 @@ class CollectionsController < ApplicationController
   end
 
   def destroy
-    @collection = current_user.collections.find_by!(id: params[:id])
+    @collection = policy_scope(current_user.collections).find_by_slug!(params[:slug])
     authorize @collection
 
     @collection.destroy!
@@ -88,7 +88,7 @@ class CollectionsController < ApplicationController
   end
 
   def find_collection
-    @find_collection ||= policy_scope(find_user.collections).find_by!(id: params[:id])
+    @find_collection ||= policy_scope(find_user.collections).find_by_slug!(params[:slug])
   end
 
   def ensure_public!

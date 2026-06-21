@@ -1,4 +1,6 @@
 class Collection < ApplicationRecord
+  include Slugable
+
   has_many :pins, dependent: :destroy
   has_many :pins_as_pinable, class_name: "Pin", as: :pinable, dependent: :destroy
   belongs_to :user

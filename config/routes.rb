@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     post :follow, on: :member
     delete :unfollow, on: :member
 
-    resources :collections, path: "/", constraints: { id: /\d+/ }
+    resources :collections, path: "/", param: :slug, constraints: { slug: /[a-zA-Z0-9-]+/ }
   end
 
   resources :pins do
@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     resource :pins, only: [ :new, :create, :show ]
   end
 
-  resources :collections, only: [ :create, :update, :destroy ] do
+  resources :collections, only: [ :create, :update, :destroy ], param: :slug do
     resource :pins, only: [ :new, :create, :show ]
   end
 
