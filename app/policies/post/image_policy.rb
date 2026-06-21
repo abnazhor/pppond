@@ -4,7 +4,7 @@ class Post::ImagePolicy < PostPolicy
   end
 
   def create?
-    user.premium?
+    user&.premium?
   end
 
   def edit?
