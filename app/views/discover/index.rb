@@ -1,5 +1,5 @@
 module Views
-  module Feeds
+  module Discover
     class Index < Views::Base
       def initialize(collections: nil, opts: {})
         @collections = collections
@@ -11,14 +11,14 @@ module Views
           render Components::Ui::PageHeader.new do |header|
             header.with_title do
               div(class: "flex gap-3 items-center") do
-                RubyUI::Text(as: "h1", size: "2xl", weight: "medium") { a(href: feed_path, class: "") { "Feed" } }
+                RubyUI::Text(as: "h1", size: "2xl", weight: "medium") { a(href: feed_path, class: "text-muted-foreground hover:text-foreground") { "Feed" } }
                 plain "•"
-                RubyUI::Text(as: "h1", size: "2xl", weight: "medium") { a(href: discover_path, class: "text-muted-foreground hover:text-foreground") { "Discover" } }
+                RubyUI::Text(as: "h1", size: "2xl", weight: "medium") { a(href: discover_path, class: "") { "Discover" } }
               end
             end
 
             header.with_primary do
-              RubyUI::Text(as: "p", weight: "") { "Collections from people you follow" }
+              RubyUI::Text(as: "p", weight: "") { "Recently updated collections from everyone" }
             end
 
             header.with_secondary do
@@ -35,7 +35,7 @@ module Views
               render Components::Collections::Collection.new(collection: collection, opts: { show_author: @opts[:show_collection_author] })
             end
           else
-            p { "No collections to show. Follow some users to see their collections here!" }
+            p { "No collections to show." }
           end
         end
       end

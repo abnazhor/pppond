@@ -6,13 +6,14 @@ module Components
         @primary_block = nil
         @secondary_block = nil
         @tertiary_block = nil
+        @title_block = nil
       end
 
       def view_template(&)
         vanish(&)
 
         div(class: "flex justify-between items-center mb-3 w-full") do
-          div { render Ui::CurrentBreadcrumbs.new }
+          div { render @title_block || title }
           div(class: "flex items-center gap-2") { @actions_block&.call }
         end
 
@@ -21,6 +22,11 @@ module Components
           div(class: "w-1/3") { @secondary_block&.call } if @secondary_block
           div(class: "w-1/3") { @tertiary_block&.call } if @tertiary_block
         }
+      end
+
+      def with_title(&block)
+        @title_block = block
+        nil
       end
 
       def with_actions(&block)
@@ -41,6 +47,12 @@ module Components
       def with_tertiary(&block)
         @tertiary_block = block
         nil
+      end
+
+      private
+
+      def title
+        Ui::CurrentBreadcrumbs.new
       end
     end
   end

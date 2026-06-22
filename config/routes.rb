@@ -10,7 +10,8 @@ Rails.application.routes.draw do
 
   root "application#root"
 
-  resource :feed
+  resource :feed, only: [ :show ]
+  resource :discover, only: [ :show ], controller: :discover
 
   resources :users, path: "/", constraints: { id: /@[^\/]+/ } do
     post :follow, on: :member
