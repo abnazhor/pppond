@@ -5,7 +5,7 @@
   </head>
 
   <body>
-    <%= render Components::Nav.new %>
+    <%= render Components::Nav.new(params: params) %>
 
     <main class="container mx-auto my-28 px-5 flex">
       <%= yield %>

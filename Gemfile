@@ -107,3 +107,5 @@ gem "data_migrate", "~> 11.3"
 gem "active_storage-blurhash"
 
 gem "aws-sdk-s3", require: false
+
+gem "search_cop", "~> 1.5"

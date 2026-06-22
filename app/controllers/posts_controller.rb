@@ -30,6 +30,13 @@ class PostsController < ApplicationController
     render Views::Posts::Edit.new(post: post)
   end
 
+  def context_menu
+    @post = policy_scope(Post).find(params[:id])
+    authorize @post
+
+    render Views::Posts::ContextMenu.new(post: @post)
+  end
+
   def update_text
     @referrer_action = Rails.application.routes.recognize_path(request.referer)
     @post = policy_scope(Post).find(params[:id])

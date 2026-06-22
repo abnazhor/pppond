@@ -19,6 +19,16 @@ class Components::Base < Phlex::HTML
 
   private
 
+  # I had to overwrite the default rails helper to be able render that partial outside of a view context.
+  # Is there a better way to do this?
+  def rails_blob_path(variant)
+    if ENV["CDN_HOST"].present?
+      Rails.application.routes.url_helpers.rails_storage_proxy_url(variant, host: ENV["CDN_HOST"])
+    else
+      Rails.application.routes.url_helpers.rails_representation_path(variant, only_path: true)
+    end
+  end
+
   def timeago(date, format: :long)
     return if date.blank?
 

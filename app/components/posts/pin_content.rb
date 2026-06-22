@@ -13,7 +13,7 @@ module Components
         elsif @pin.pinable.is_a?(Post::Image)
           render Components::Posts::Image::PinContent.new(pin: @pin)
         else
-          raise "Unknown post type"
+          raise "Unknown pinable type #{@pin.pinable_type}"
         end
       end
     end

@@ -41,12 +41,16 @@ Rails.application.routes.draw do
 
     post :create_image, on: :collection
 
+    get :context_menu, on: :member
+
     resource :pins, only: [ :new, :create, :show ]
   end
 
   resources :collections, only: [ :create, :update, :destroy ], param: :slug do
     resource :pins, only: [ :new, :create, :show ]
   end
+
+  resource :search, only: [ :show ]
 
   get :join, to: "sessions#new"
   post :join, to: "sessions#create"

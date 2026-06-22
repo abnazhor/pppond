@@ -9,7 +9,7 @@ module Components
 
         def title
           span(class: "text-xs text-muted-foreground text-nowrap overflow-hidden text-ellipsis max-w-full block text-center group-hover:hidden") {
-            "Untitled"
+            @pin.pinable.title || "Untitled"
           }
         end
       end

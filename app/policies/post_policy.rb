@@ -7,6 +7,10 @@ class PostPolicy < ApplicationPolicy
     user.present?
   end
 
+  def context_menu?
+    user.present?
+  end
+
   class Scope
     def initialize(user, scope)
       @user  = user

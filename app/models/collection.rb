@@ -1,5 +1,6 @@
 class Collection < ApplicationRecord
   include Slugable
+  include SearchCop
 
   has_many :pins, dependent: :destroy
   has_many :pins_as_pinable, class_name: "Pin", as: :pinable, dependent: :destroy
@@ -13,6 +14,10 @@ class Collection < ApplicationRecord
   scope :inbox, -> { where(inbox: true) }
   scope :regular, -> { where(inbox: false) }
   scope :recently_changed_first, -> { order(changed_at: :desc) }
+
+  search_scope :search do
+    attributes :name, user: "user.username"
+  end
 
   def self.find_inbox!
     find_by!(inbox: true)
