@@ -240,6 +240,8 @@ GEM
     marcel (1.2.1)
     marksmith (0.5.2)
       activesupport
+    meta-tags (2.23.0)
+      actionpack (>= 6.0.0)
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
@@ -551,6 +553,7 @@ DEPENDENCIES
   kamal
   link_thumbnailer (~> 3.4)
   marksmith (~> 0.5.2)
+  meta-tags (~> 2.23)
   mini_magick (~> 5.3)
   mission_control-jobs (~> 1.1)
   pagy (~> 43.5)

@@ -4,6 +4,7 @@ class FeedsController < ApplicationController
   skip_after_action :verify_authorized
 
   def show
+    @page_title = "Feed"
     add_breadcrumb("Feed", feed_path)
 
     @collections = policy_scope(

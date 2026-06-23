@@ -31,6 +31,13 @@ class Collection < ApplicationRecord
     name
   end
 
+  def to_meta_tags
+    {
+      title: name,
+      description: description
+    }
+  end
+
   private
 
   def only_one_inbox_per_user

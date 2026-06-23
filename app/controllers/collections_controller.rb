@@ -7,6 +7,7 @@ class CollectionsController < ApplicationController
 
     add_breadcrumb(find_user.to_s, user_path(find_user))
 
+    @page_title = "Collections by #{find_user}"
     @collections = policy_scope(find_user.collections).regular.all.recently_changed_first
     @inbox = policy_scope(find_user.collections).find_inbox
 
@@ -21,6 +22,7 @@ class CollectionsController < ApplicationController
     add_breadcrumb(find_user.to_s, user_path(find_user))
     add_breadcrumb(@collection.name, user_collection_path(@collection.user, @collection))
 
+    set_meta_tags @collection
     @pagy, @pins = pagy(policy_scope(@collection.pins.order(id: :desc).includes(:user, pinable: [ :screenshot_attachment, url_cache: :thumb_attachment ])))
 
     Current.collection = @collection

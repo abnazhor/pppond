@@ -4,6 +4,7 @@ class DiscoverController < ApplicationController
   skip_after_action :verify_authorized
 
   def show
+    @page_title = "Discover"
     add_breadcrumb("Discover", discover_path)
 
     @collections = policy_scope(
