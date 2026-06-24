@@ -52,7 +52,7 @@ class Views::Collections::Show < Views::Base
       div(data: { controller: :pagination, pagination_results_id: "inbox-pins", pagination_pagination_id: "pagination" }) do
         div(class: "grid grid-cols-12 gap-9", id: "inbox-pins", data: { pagination_target: :results }) do
           @pins.each do |pin|
-            div(class: "col-span-3", id: dom_id(pin, :cell)) do
+            div(class: "col-span-6 lg:col-span-3", id: dom_id(pin, :cell)) do
               render Components::Pins::Pin.new(pin: pin)
             end
           end

@@ -10,7 +10,7 @@ module Views
         div(class: "w-full") do
           render Components::Ui::PageHeader.new do |header|
             header.with_title do
-              div(class: "flex gap-3 items-center") do
+              div(class: "flex gap-2 lg:gap-3 items-center") do
                 RubyUI::Text(as: "h1", size: "2xl", weight: "medium") { a(href: feed_path, class: "") { "Feed" } }
                 plain "•"
                 RubyUI::Text(as: "h1", size: "2xl", weight: "medium") { a(href: discover_path, class: "text-muted-foreground hover:text-foreground") { "Discover" } }
@@ -19,12 +19,6 @@ module Views
 
             header.with_primary do
               RubyUI::Text(as: "p", weight: "") { "Collections from people you follow" }
-            end
-
-            header.with_secondary do
-              # RubyUI::Text(as: "p", size: "xs", weight: "muted", class: "italic") {
-              #   "Pinned in <a href='#'>Lorem ipsum dolor sit amet</a>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.".html_safe
-              # }
             end
           end
 

@@ -5,11 +5,9 @@
   </head>
 
   <body>
-    <%= render Components::Nav.new(params: params) %>
-
-    <main class="container mx-auto my-28 px-5 flex">
+    <%= render Components::PageWrap.new(params: params) do %>
       <%= yield %>
-    </main>
+    <% end %>
 
     <%= render RubyUI::ToastRegion.new(flash: flash.to_h) %>
     <%= render Components::ConnectDialog.new %>

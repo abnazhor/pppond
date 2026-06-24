@@ -12,15 +12,15 @@ module Components
       def view_template(&)
         vanish(&)
 
-        div(class: "flex justify-between items-center mb-3 w-full") do
+        div(class: "flex flex-col lg:flex-row justify-between mb-3 w-full lg:items-center gap-1 lg:gap-3") do
           div { render @title_block || title }
           div(class: "flex items-center gap-2") { @actions_block&.call }
         end
 
-        div(class: "flex gap-24") {
-          div(class: "w-1/3") { @primary_block&.call } if @primary_block
-          div(class: "w-1/3") { @secondary_block&.call } if @secondary_block
-          div(class: "w-1/3") { @tertiary_block&.call } if @tertiary_block
+        div(class: "flex gap-3 lg:gap-24 flex-col lg:flex-row") {
+          div(class: "lg:w-1/3") { @primary_block&.call } if @primary_block
+          div(class: "lg:w-1/3") { @secondary_block&.call } if @secondary_block
+          div(class: "lg:w-1/3") { @tertiary_block&.call } if @tertiary_block
         }
       end
 
