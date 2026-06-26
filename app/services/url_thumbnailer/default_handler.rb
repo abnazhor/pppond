@@ -41,7 +41,7 @@ class UrlThumbnailer::DefaultHandler
 
       logger.info "Attaching thumbnail to URL cache for URL: #{@post.url}..."
       @url_cache.thumb.attach(
-        io: io,
+        io: compress_image(io),
         filename: File.basename(URI.parse(image_url).path)
       )
     rescue Faraday::ResourceNotFound, Faraday::ForbiddenError => e
@@ -62,13 +62,13 @@ class UrlThumbnailer::DefaultHandler
     raise ResponseStatusInvalidError.new("Invalid response status: #{status}") if status != 200
 
     page.set_viewport(width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
-    sleep 2
+    sleep 5
 
     file = Tempfile.new([ "screenshot", ".png" ])
     page.screenshot(path: file.path)
 
     @post.screenshot.attach(
-      io: File.open(file.path),
+      io: compress_image(File.open(file.path)),
       filename: "screenshot.png",
       content_type: "image/png"
     )
@@ -84,6 +84,12 @@ class UrlThumbnailer::DefaultHandler
       pending_connection_errors: false,
       timeout: 240
     )
+  end
+
+  def compress_image(io)
+    image = MiniMagick::Image.read(io)
+    image.quality(80)
+    StringIO.new(image.to_blob)
   end
 
   def download_thumb(url)

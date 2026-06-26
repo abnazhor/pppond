@@ -28,16 +28,18 @@ module Views
       private
 
       def image
-        image_tag(@post.files.first, class: "object-fit")
+        image_tag(@post.files.first, class: "object-contain")
       end
 
       def source_link_wrap(&block)
         if @post.url.present?
-          link_to @post.url, rel: :nofollow do
+          link_to @post.url, rel: :nofollow, class: "max-w-full max-h-full" do
             yield
           end
         else
-          yield
+          div(class: "max-w-full max-h-full") do
+            yield
+          end
         end
       end
     end

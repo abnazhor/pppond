@@ -13,7 +13,7 @@ module Views
         Components::Posts::ShowContent() do |sc|
           sc.with_preview do
             div(class: "border-r p-6 h-full w-full flex items-center justify-center") do
-              link_to @post.url do
+              link_to @post.url, class: "max-w-full max-h-full" do
                 image
               end
             end
@@ -29,9 +29,9 @@ module Views
 
       def image
         if @post.screenshot.attached?
-          image_tag(@post.screenshot, class: "object-fit")
+          image_tag(@post.screenshot, class: "object-contain")
         elsif @post.url_cache&.thumb.attached?
-          image_tag(@post.url_cache.thumb, class: "object-fit")
+          image_tag(@post.url_cache.thumb, class: "object-contain")
         end
       end
     end
