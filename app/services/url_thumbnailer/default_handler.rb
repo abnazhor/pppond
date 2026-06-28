@@ -34,14 +34,11 @@ class UrlThumbnailer::DefaultHandler
 
     begin
       downloaded_image = download_thumb(image_url)
-      io = StringIO.new(downloaded_image.body)
-      io.rewind
+      ext = File.extname(URI.parse(image_url).path).presence || ".jpg"
+      tmp = Tempfile.new([ "thumbnail", ext ]).tap { |f| f.binmode; f.write(downloaded_image.body); f.rewind }
 
       logger.info "Attaching thumbnail to URL cache for URL: #{@post.url}..."
-      @post.thumb.attach(
-        io: io,
-        filename: File.basename(URI.parse(image_url).path)
-      )
+      @post.thumb.attach(process_image(tmp))
     rescue Faraday::ResourceNotFound, Faraday::ForbiddenError => e
       # Do not report that anywhere, there will be a lot of cases like this and we can't do much about that.
       logger.warn "Thumbnail not found at URL: #{image_url} for post URL: #{@post.url}. Error: #{e.message}"
@@ -63,11 +60,7 @@ class UrlThumbnailer::DefaultHandler
     file = Tempfile.new([ "screenshot", ".png" ])
     page.screenshot(path: file.path)
 
-    @post.screenshot.attach(
-      io: File.open(file.path),
-      filename: "screenshot.png",
-      content_type: "image/png"
-    )
+    @post.screenshot.attach(process_image(file))
   end
 
   private
@@ -80,6 +73,10 @@ class UrlThumbnailer::DefaultHandler
       pending_connection_errors: false,
       timeout: 240
     )
+  end
+
+  def process_image(file)
+    Image::Operation::Process.call(params: { image: file })[:output]
   end
 
   def download_thumb(url)

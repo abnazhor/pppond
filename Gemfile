@@ -116,3 +116,5 @@ gem "meta-tags", "~> 2.23"
 gem "kmeans-clusterer", "~> 0.11.4"
 
 gem "color", "~> 2.2"
+
+gem "trailblazer-rails", "~> 2.4"
