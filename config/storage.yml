@@ -26,4 +26,4 @@ amazon:
 mirror:
   service: Mirror
   primary: local
-  mirrors: [ mirror ]
+  mirrors: [ amazon ]
