@@ -1,4 +1,4 @@
-# pond
+# ● pond
 
 An ActivityPub-powered federated platform for aggregating links, discovering ideas, and gathering inspiration.
 
