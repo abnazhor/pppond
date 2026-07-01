@@ -1,24 +1,42 @@
-# README
+# pond
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Federated link aggregation and inspiration gathering. Powered by ActivityPub.
 
-Things you may want to cover:
+<img width="3204" height="2416" alt="image" src="https://github.com/user-attachments/assets/c0accedc-24e0-4b2d-907e-e27c29194b53" />
 
-* Ruby version
+## Getting started
 
-* System dependencies
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
-* Configuration
+### Prerequisites
 
-* Database creation
+- ruby 3.4.5
+- sqlite
+- (optional) docker - for running `browserless/chromium`
 
-* Database initialization
+### Installing
 
-* How to run the test suite
+A step by step series of examples that help you get a development env running.
 
-* Services (job queues, cache servers, search engines, etc.)
+#### Setup / first run
 
-* Deployment instructions
+If this is the first time that you are installing the app, start with installing dependencies:
 
-* ...
+    $ bundle install
+
+Setup database
+
+    $ bundle exec rails db:setup
+
+#### Development
+
+If the app has been set up already and you want to continue working on it:
+
+    $ bundle exec rails db:migrate
+    $ bin/dev
+
+#### Browserless
+
+It you want to run browserless/chromium locally for screenshots grabbing, run:
+
+    $ docker compose up
